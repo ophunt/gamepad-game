@@ -1,0 +1,16 @@
+* {
+	margin: 0px;
+}
+
+canvas {
+	display: block;
+	margin: auto;
+
+	border: 1px solid black;
+
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+}
