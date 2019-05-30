@@ -53,7 +53,7 @@ function constrain(min, n, max) {
 
 function updateInputs() {
 	var gamepads = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
-	if (!gamepads[0]) {
+	if (!gamepads || !gamepads[0]) {
 		return;
 	}
 
