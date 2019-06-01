@@ -1,5 +1,7 @@
 Game = {};
 Game.inputs = {};
+Game.obstacles = [];
+Game.characters = [];
 
 function setup() {
 	Game.canvas = document.getElementById("canvas");
@@ -36,8 +38,7 @@ function gameLoop() {
 }
 
 function clearCanvas() {
-	Game.ctx.fillStyle = "white";
-	Game.ctx.fillRect(0, 0, Game.width, Game.height);
+	Game.ctx.clearRect(0, 0, Game.width, Game.height);
 }
 
 function buttonPressed(b) {
