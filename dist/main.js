@@ -1,7 +1,5 @@
 Game = {};
 Game.inputs = {};
-Game.obstacles = [];
-Game.characters = [];
 
 function setup() {
 	Game.canvas = document.getElementById("canvas");
