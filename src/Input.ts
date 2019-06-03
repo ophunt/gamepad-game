@@ -1,14 +1,7 @@
-class Input {
-	constructor(
-		public name: string,
-		public type: InputType
-	) {}
+interface Input {
+	name: string,
+	gamepad: Gamepad,
+	index: number,
 
-	readInputs(gamepad: any) {
-
-	}
-}
-
-enum InputType {
-	Button, Axis, Trigger
+	readInput(gamepad: Gamepad): void;
 }
