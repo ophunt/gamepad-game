@@ -12,6 +12,7 @@ class ButtonInput implements Input {
 	}
 
 	public readInput(gamepad: Gamepad): void {
+		// This might need to be retrieved from the Gamepad every time: test
 		this.pressed = this.button.pressed;
 	}
 }
