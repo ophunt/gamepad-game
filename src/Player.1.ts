@@ -7,71 +7,48 @@ class Player {
 		public color: string) {
 	}
 
-	update(inputs, game) {
+	update(inputs: GamepadInputs, game: Game) {
 		if (inputs.a) {
 			this.attack(game);
-		} else if (inputs.b) {
+		}
+
+		if (inputs.b) {
 			this.color = "red";
 		} else if (inputs.x) {
 			this.color = "blue";
 		} else if (inputs.y) {
 			this.color = "yellow";
 		}
-
-		this.x_velocity = Math.abs(inputs.left_x) > 0.1 ? inputs.left_x : 0;
-		this.y_velocity = Math.abs(inputs.left_y) > 0.1 ? inputs.left_y : 0;
-
-		if (Math.abs(this.x_velocity) > Math.abs(this.y_velocity)) {
-			if (this.x_velocity > 0) {
-				this.facing = "r";
-			} else if (this.x_velocity < 0) {
-				this.facing = "l";
-			}
-		} else if (Math.abs(this.x_velocity) < Math.abs(this.y_velocity)) {
-			if (this.y_velocity > 0) {
-				this.facing = "d";
-			} else if (this.y_velocity < 0) {
-				this.facing = "u";
-			}
-		}
 	}
 
-	draw(ctx) {
+	draw(ctx: any) {
 		ctx.fillStyle = this.color;
-		ctx.fillRect(this.x, this.y, this.width, this.height);
+		ctx.fillRect(this.x, this.y, 20, 20);
+		// TODO: Replace with drawing a real character
 
 		ctx.fillStyle = "orange";
 		switch (this.facing) {
-			case "u":
-				ctx.fillRect(this.x, this.y, this.width, this.height / 10);
+			case Direction.Up:
+				ctx.fillRect(this.x, this.y, 20, 2);
 				break;
-			case "d":
-				ctx.fillRect(this.x, this.y + this.height * 9/10, this.width, this.height / 10);
+			case Direction.Down:
+				ctx.fillRect(this.x, this.y + 18, 20, 2);
 				break;
-			case "l":
-				ctx.fillRect(this.x, this.y, this.width / 10, this.height);
+			case Direction.Left:
+				ctx.fillRect(this.x, this.y, 2, 20);
 				break;
-			case "r":
-				ctx.fillRect(this.x + this.width * 9/10 , this.y, this.width / 10, this.height);
+			case Direction.Right:
+				ctx.fillRect(this.x + 18, this.y, 2, 20);
 				break;
 		}
 	}
 
-	move(game) {
-		this.x += this.speed * this.x_velocity
-		if (this.x < 0 || this.x > game.width - this.width) {
-			this.x = constrain(0, this.x, game.width - this.width);
-			this.x_velocity = 0;
-		}
+	move(game: Game, direction: Direction) {
+		let newTile: Tile;
 
-		this.y += this.speed * this.y_velocity
-		if (this.y < 0 || this.y > game.height - this.height) {
-			this.y = constrain(0, this.y, game.height - this.height);
-			this.y_velocity = 0;
-		}
 	}
 
-	attack(game) {
+	attack(game: Game) {
 		;
 	}
 }
