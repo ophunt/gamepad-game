@@ -8,7 +8,8 @@ class TriggerInput implements Input {
 		public gamepad: Gamepad,
 		public index: number,
 	) {
-		this.button = gamepad.buttons[this.index]
+		this.button = gamepad.buttons[this.index];
+		this.value = this.button.value;
 	}
 
 	public readInput(gamepad: Gamepad): void {
