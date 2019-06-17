@@ -1,4 +1,4 @@
-class ButtonInput implements Input {
+export class ButtonInput implements Input {
 
 	public button: GamepadButton;
 	public pressed: boolean;

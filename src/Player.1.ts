@@ -1,3 +1,5 @@
+import { GamepadInputs } from "./GamepadInputs";
+
 class Player {
 	facing: Direction = Direction.Right;
 
