@@ -1,0 +1,28 @@
+{
+  "name": "gamepad-game",
+  "version": "1.0.0",
+  "description": "A game using the Gamepad API",
+  "main": "index.js",
+  "dependencies": {
+    "common-js": "^0.3.8",
+    "webpack-cli": "^3.3.4",
+    "webpack": "^4.34.0"
+  },
+  "devDependencies": {
+    "ts-loader": "^6.0.3",
+    "typescript": "^3.5.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ophunt/gamepad-game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ophunt/gamepad-game/issues"
+  },
+  "homepage": "https://github.com/ophunt/gamepad-game#readme"
+}
