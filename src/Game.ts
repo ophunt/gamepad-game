@@ -1,3 +1,5 @@
-class Game {
-
+export class Game {
+	main() {
+		console.log("Game loaded!");
+	}
 }
