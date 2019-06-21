@@ -1,18 +1,20 @@
 import { GamepadInputs } from "./GamepadInputs";
 import { Game } from "./Game";
 
-class Player {
+export class Player {
 	facing: Direction = Direction.Right;
 
 	constructor(
-		public x: number,
-		public y: number,
-		public color: string) {
+		private x: number,
+		private y: number,
+		private color: string,
+		private game: Game
+		) {
 	}
 
-	update(inputs: GamepadInputs, game: Game) {
+	update(inputs: GamepadInputs) {
 		if (inputs.a) {
-			this.attack(game);
+			this.attack(this.game);
 		}
 
 		if (inputs.b) {
