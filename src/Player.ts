@@ -1,8 +1,9 @@
 import { Game } from "./Game";
 import { GamepadInputs } from "./GamepadInputs";
+import { VisibleObject } from "./VisibleObject";
 import { Direction } from "./Direction";
 
-export class Player {
+export class Player implements VisibleObject {
 	facing: Direction = Direction.Right;
 
 	constructor(
@@ -13,7 +14,7 @@ export class Player {
 		) {
 	}
 
-	update(inputs: GamepadInputs) {
+	update(inputs: GamepadInputs): void {
 		if (inputs.a) {
 			this.attack(this.game);
 		}
@@ -27,7 +28,7 @@ export class Player {
 		}
 	}
 
-	draw(ctx: any) {
+	draw(ctx: CanvasRenderingContext2D): void {
 		ctx.fillStyle = this.color;
 		ctx.fillRect(this.x, this.y, 20, 20);
 		// TODO: Replace with drawing a real character
@@ -49,12 +50,11 @@ export class Player {
 		}
 	}
 
-	move(game: Game, direction: Direction) {
-		let newTile: Tile;
+	move(game: Game, direction: Direction): void {
 
 	}
 
-	attack(game: Game) {
+	attack(game: Game): void {
 		;
 	}
 }

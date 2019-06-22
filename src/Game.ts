@@ -1,20 +1,32 @@
 import { Player } from "./Player";
+import { VisibleObject } from "./visibleObject";
 
 export class Game {
 	private player: Player;
+	private visibleObjects: VisibleObject[] = [];
 
 	constructor (
-		public ctx: CanvasRenderingContext2D,
+		private ctx: CanvasRenderingContext2D,
 	) {
 		this.player = new Player(10, 10, "red", this);
+		this.visibleObjects.push(this.player);
 	};
 
-	gameLoop() {
+	private drawVisibleObjects = () => {
+		for (let vObj of this.visibleObjects) {
+			vObj.draw(this.ctx);
+		}
+	};
 
-	}
+	private gameLoop = () => {
+		this.drawVisibleObjects();
 
-	main() {
-		this.player.draw(this.ctx);
+		requestAnimationFrame(this.gameLoop);
+	};
+
+	public main(): void {
 		console.log("Game loaded!");
+
+		requestAnimationFrame(this.gameLoop);
 	};
 }
