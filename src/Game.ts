@@ -9,6 +9,10 @@ export class Game {
 		this.player = new Player(10, 10, "red", this);
 	};
 
+	gameLoop() {
+
+	}
+
 	main() {
 		this.player.draw(this.ctx);
 		console.log("Game loaded!");

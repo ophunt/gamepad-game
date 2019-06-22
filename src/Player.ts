@@ -1,5 +1,6 @@
-import { GamepadInputs } from "./GamepadInputs";
 import { Game } from "./Game";
+import { GamepadInputs } from "./GamepadInputs";
+import { Direction } from "./Direction";
 
 export class Player {
 	facing: Direction = Direction.Right;
