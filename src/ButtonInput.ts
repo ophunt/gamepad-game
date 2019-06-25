@@ -12,7 +12,7 @@ export class ButtonInput implements Input {
 		this.pressed = this.button.pressed;
 	}
 
-	public readInput(gamepad: Gamepad): void {
+	public readInput(): void {
 		// This might need to be retrieved from the Gamepad every time: test
 		this.pressed = this.button.pressed;
 	}

@@ -5,8 +5,8 @@ import { GamepadInputs } from "./GamepadInputs";
 
 export class Game {
 	private player: Player;
-	private gamepad: Gamepad;
-	private inputs: GamepadInputs;
+	private gamepad?: Gamepad;
+	private inputs?: GamepadInputs;
 	private gameObjects: GameObject[] = [];
 	private visibleObjects: VisibleObject[] = [];
 
@@ -14,14 +14,27 @@ export class Game {
 		private ctx: CanvasRenderingContext2D,
 	) {
 		this.player = new Player(10, 10, "red", this);
-		this.gamepad = new Gamepad();
-		this.inputs = new GamepadInputs(this.gamepad);
 		this.visibleObjects.push(this.player);
 		this.gameObjects.push(this.player);
+
+		window.addEventListener("gamepadconnected", () => this.getGamepad())
 	};
 
-	private updateInputs = () => {
+	private getGamepad = () => {
+		let gamepads = navigator.getGamepads();
+		if (gamepads.length > 0 && gamepads[0] !== null) {
+			this.gamepad = <Gamepad>gamepads[0];
+		}
 
+		this.inputs = new GamepadInputs(<Gamepad>this.gamepad);
+	}
+
+	private updateInputs = (): boolean => {
+		if (this.inputs) {
+			(<GamepadInputs>this.inputs).update();
+			return true;
+		}
+		return false;
 	}
 
 	private drawVisibleObjects = () => {
@@ -31,15 +44,16 @@ export class Game {
 	};
 
 	private updateObjects = () => {
-		this.updateInputs();
-		for (let gObj of this.gameObjects) {
-			gObj.update(this.inputs);
+		if (this.updateInputs()) {
+			for (let gObj of this.gameObjects) {
+				gObj.update(<GamepadInputs>this.inputs);
+			}
 		}
 	}
 
 	private gameLoop = () => {
-		this.drawVisibleObjects();
 		this.updateObjects();
+		this.drawVisibleObjects();
 
 		requestAnimationFrame(this.gameLoop);
 	};

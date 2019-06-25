@@ -1,4 +1,4 @@
-class TriggerInput implements Input {
+export class TriggerInput implements Input {
 
 	public button: GamepadButton;
 	public value: number = 0;
@@ -12,7 +12,7 @@ class TriggerInput implements Input {
 		this.value = this.button.value;
 	}
 
-	public readInput(gamepad: Gamepad): void {
+	public readInput(): void {
 		this.value = this.button.value;
 	}
 }

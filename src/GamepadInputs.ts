@@ -1,4 +1,5 @@
 import { ButtonInput } from "./ButtonInput";
+import { TriggerInput } from "./TriggerInput";
 
 export class GamepadInputs {
 	public a: ButtonInput;
@@ -18,6 +19,7 @@ export class GamepadInputs {
 	public dLeft: ButtonInput;
 	public dRight: ButtonInput;
 	public power: ButtonInput;
+
 	constructor(
 		public gamepad: Gamepad,
 	) {
@@ -38,5 +40,25 @@ export class GamepadInputs {
 		this.dLeft = new ButtonInput("dLeft", gamepad, 14);
 		this.dRight = new ButtonInput("dRight", gamepad, 15);
 		this.power = new ButtonInput("power", gamepad, 16);
+	}
+
+	public update = () => {
+		this.a.readInput();
+		this.b.readInput();
+		this.x.readInput();
+		this.y.readInput();
+		this.leftBumper.readInput();
+		this.rightBumper.readInput();
+		this.leftTrigger.readInput();
+		this.rightTrigger.readInput();
+		this.view.readInput();
+		this.menu.readInput();
+		this.leftStick.readInput();
+		this.rightStick.readInput();
+		this.dUp.readInput();
+		this.dDown.readInput();
+		this.dLeft.readInput();
+		this.dRight.readInput();
+		this.power.readInput();
 	}
 }
