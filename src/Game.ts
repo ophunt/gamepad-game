@@ -31,7 +31,12 @@ export class Game {
 
 	private updateInputs = (): boolean => {
 		if (this.inputs) {
-			(<GamepadInputs>this.inputs).update();
+			let gamepads = navigator.getGamepads();
+			if (gamepads.length > 0 && gamepads[0] !== null) {
+				this.gamepad = <Gamepad>gamepads[0];
+			}
+
+			this.inputs = new GamepadInputs(<Gamepad>this.gamepad);
 			return true;
 		}
 		return false;

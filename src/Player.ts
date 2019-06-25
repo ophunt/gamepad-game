@@ -15,15 +15,16 @@ export class Player implements VisibleObject {
 	}
 
 	update(inputs: GamepadInputs): void {
-		if (inputs.a) {
+		if (inputs.a.pressed) {
+			console.log("A");
 			this.attack(this.game);
 		}
 
-		if (inputs.b) {
+		if (inputs.b.pressed) {
 			this.color = "red";
-		} else if (inputs.x) {
+		} else if (inputs.x.pressed) {
 			this.color = "blue";
-		} else if (inputs.y) {
+		} else if (inputs.y.pressed) {
 			this.color = "yellow";
 		}
 	}
