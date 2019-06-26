@@ -27,6 +27,23 @@ export class Player implements VisibleObject {
 		} else if (inputs.y.pressed) {
 			this.color = "yellow";
 		}
+
+		let dx: number = 0;
+		let dy: number = 0;
+		if (inputs.dUp.pressed) {
+			dy++;
+			this.facing = Direction.Up;
+		} else if (inputs.dDown.pressed) {
+			dy--;
+			this.facing = Direction.Down;
+		} else if (inputs.dRight.pressed) {
+			dx++;
+			this.facing = Direction.Right;
+		} else if (inputs.dLeft.pressed) {
+			dx--;
+			this.facing = Direction.Left;
+		}
+		this.move(dx, dy);
 	}
 
 	draw(ctx: CanvasRenderingContext2D): void {
@@ -51,8 +68,9 @@ export class Player implements VisibleObject {
 		}
 	}
 
-	move(game: Game, direction: Direction): void {
-
+	move(dx: number, dy: number): void {
+		this.x += dx;
+		this.y -= dy;
 	}
 
 	attack(game: Game): void {

@@ -42,7 +42,8 @@ export class Game {
 		return false;
 	}
 
-	private drawVisibleObjects = () => {
+	private draw = () => {
+		this.ctx.clearRect(0, 0, 1000, 1000);
 		for (let vObj of this.visibleObjects) {
 			vObj.draw(this.ctx);
 		}
@@ -58,7 +59,7 @@ export class Game {
 
 	private gameLoop = () => {
 		this.updateObjects();
-		this.drawVisibleObjects();
+		this.draw();
 
 		requestAnimationFrame(this.gameLoop);
 	};
