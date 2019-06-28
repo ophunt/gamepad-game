@@ -5,13 +5,15 @@ import { Direction } from "./Direction";
 
 export class Player implements VisibleObject {
 	facing: Direction = Direction.Right;
+	speed: number = 3;
 
 	constructor(
 		private x: number,
 		private y: number,
 		private color: string,
 		private game: Game
-		) {
+	) {
+
 	}
 
 	update(inputs: GamepadInputs): void {
@@ -31,10 +33,10 @@ export class Player implements VisibleObject {
 		let dx: number = 0;
 		let dy: number = 0;
 		if (inputs.dUp.pressed) {
-			dy++;
+			dy--;
 			this.facing = Direction.Up;
 		} else if (inputs.dDown.pressed) {
-			dy--;
+			dy++;
 			this.facing = Direction.Down;
 		} else if (inputs.dRight.pressed) {
 			dx++;
@@ -42,6 +44,20 @@ export class Player implements VisibleObject {
 		} else if (inputs.dLeft.pressed) {
 			dx--;
 			this.facing = Direction.Left;
+		} else if (Math.abs(inputs.leftXAxis.value) > 0.15 || Math.abs(inputs.leftYAxis.value) > 0.15) {
+			if (Math.abs(inputs.leftXAxis.value) > 0.15) {
+				dx = inputs.leftXAxis.value;
+			}
+
+			if (Math.abs(inputs.leftYAxis.value) > 0.15) {
+				dy = inputs.leftYAxis.value;
+			}
+
+			if (Math.abs(dx) > Math.abs(dy)) {
+				this.facing = dx > 0 ? Direction.Right : Direction.Left;
+			} else {
+				this.facing = dy > 0 ? Direction.Down : Direction.Up;
+			}
 		}
 		this.move(dx, dy);
 	}
@@ -69,8 +85,18 @@ export class Player implements VisibleObject {
 	}
 
 	move(dx: number, dy: number): void {
+		dx *= this.speed;
+		dy *= this.speed;
+
+		let c = Math.sqrt(dx*dx + dy*dy);
+		if (c*c > this.speed*this.speed) {
+			c /= this.speed;
+			dx /= c;
+			dy /= c;
+		}
+
 		this.x += dx;
-		this.y -= dy;
+		this.y += dy;
 	}
 
 	attack(game: Game): void {

@@ -1,5 +1,6 @@
 import { ButtonInput } from "./ButtonInput";
 import { TriggerInput } from "./TriggerInput";
+import { AxisInput } from "./AxisInput";
 
 export class GamepadInputs {
 	public a: ButtonInput;
@@ -19,6 +20,11 @@ export class GamepadInputs {
 	public dLeft: ButtonInput;
 	public dRight: ButtonInput;
 	public power: ButtonInput;
+
+	public leftXAxis: AxisInput;
+	public leftYAxis: AxisInput;
+	public rightXAxis: AxisInput;
+	public rightYAxis: AxisInput;
 
 	constructor(
 		public gamepad: Gamepad,
@@ -40,5 +46,10 @@ export class GamepadInputs {
 		this.dLeft = new ButtonInput("dLeft", gamepad, 14);
 		this.dRight = new ButtonInput("dRight", gamepad, 15);
 		this.power = new ButtonInput("power", gamepad, 16);
+
+		this.leftXAxis = new AxisInput("dDown", gamepad, 0);
+		this.leftYAxis = new AxisInput("dLeft", gamepad, 1);
+		this.rightXAxis = new AxisInput("dRight", gamepad, 2);
+		this.rightYAxis = new AxisInput("power", gamepad, 3);
 	}
 }
