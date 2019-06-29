@@ -9,8 +9,4 @@ export class AxisInput implements Input {
 	) {
 		this.value = gamepad.axes[this.index]
 	}
-
-	public readInput(): void {
-		this.value = this.gamepad.axes[this.index];
-	}
 }

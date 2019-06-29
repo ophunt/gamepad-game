@@ -11,8 +11,4 @@ export class TriggerInput implements Input {
 		this.button = gamepad.buttons[this.index];
 		this.value = this.button.value;
 	}
-
-	public readInput(): void {
-		this.value = this.button.value;
-	}
 }

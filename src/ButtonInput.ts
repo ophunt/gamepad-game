@@ -11,9 +11,4 @@ export class ButtonInput implements Input {
 		this.button = gamepad.buttons[this.index];
 		this.pressed = this.button.pressed;
 	}
-
-	public readInput(): void {
-		// This might need to be retrieved from the Gamepad every time: test
-		this.pressed = this.button.pressed;
-	}
 }
