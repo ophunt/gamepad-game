@@ -48,11 +48,9 @@ export class Player implements VisibleObject {
 			if (Math.abs(inputs.leftXAxis.value) > 0.15) {
 				dx = inputs.leftXAxis.value;
 			}
-
 			if (Math.abs(inputs.leftYAxis.value) > 0.15) {
 				dy = inputs.leftYAxis.value;
 			}
-
 			if (Math.abs(dx) > Math.abs(dy)) {
 				this.facing = dx > 0 ? Direction.Right : Direction.Left;
 			} else {
@@ -63,25 +61,31 @@ export class Player implements VisibleObject {
 	}
 
 	draw(ctx: CanvasRenderingContext2D): void {
+		let playerSide = 50;
+		let facingSide = 10;
 		ctx.fillStyle = this.color;
-		ctx.fillRect(this.x, this.y, 20, 20);
+		ctx.fillRect(this.x, this.y, playerSide, playerSide);
 		// TODO: Replace with drawing a real character
 
 		ctx.fillStyle = "orange";
 		switch (this.facing) {
 			case Direction.Up:
-				ctx.fillRect(this.x, this.y, 20, 2);
+				ctx.fillRect(this.x, this.y, playerSide, facingSide);
 				break;
 			case Direction.Down:
-				ctx.fillRect(this.x, this.y + 18, 20, 2);
+				ctx.fillRect(this.x, this.y + playerSide - facingSide, playerSide, facingSide);
 				break;
 			case Direction.Left:
-				ctx.fillRect(this.x, this.y, 2, 20);
+				ctx.fillRect(this.x, this.y, facingSide, playerSide);
 				break;
 			case Direction.Right:
-				ctx.fillRect(this.x + 18, this.y, 2, 20);
+				ctx.fillRect(this.x + playerSide - facingSide, this.y, facingSide, playerSide);
 				break;
 		}
+
+		ctx.beginPath();
+		ctx.arc(this.x + playerSide/2, this.y + playerSide/2, 100, 0, 2*Math.PI);
+		ctx.stroke();
 	}
 
 	move(dx: number, dy: number): void {
