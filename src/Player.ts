@@ -4,8 +4,9 @@ import { VisibleObject } from "./VisibleObject";
 import { Direction } from "./Direction";
 
 export class Player implements VisibleObject {
-	facing: Direction = Direction.Right;
-	speed: number = 3;
+	private facing: Direction = Direction.Right;
+	private speed: number = 3;
+	private radius: number = 50;
 
 	constructor(
 		private x: number,
@@ -17,11 +18,13 @@ export class Player implements VisibleObject {
 	}
 
 	update(inputs: GamepadInputs): void {
+		// Determine attack
 		if (inputs.a.pressed) {
 			console.log("A");
 			this.attack(this.game);
 		}
 
+		// Determine color
 		if (inputs.b.pressed) {
 			this.color = "red";
 		} else if (inputs.x.pressed) {
@@ -30,6 +33,7 @@ export class Player implements VisibleObject {
 			this.color = "yellow";
 		}
 
+		// Calculate movement
 		let dx: number = 0;
 		let dy: number = 0;
 		if (inputs.dUp.pressed) {
@@ -58,6 +62,11 @@ export class Player implements VisibleObject {
 			}
 		}
 		this.move(dx, dy);
+
+		// Determine circle radius
+		if (inputs.leftTrigger.value > 0 || inputs.rightTrigger.value > 0) {
+			this.radius += inputs.rightTrigger.value - inputs.leftTrigger.value;
+		}
 	}
 
 	draw(ctx: CanvasRenderingContext2D): void {
@@ -84,7 +93,7 @@ export class Player implements VisibleObject {
 		}
 
 		ctx.beginPath();
-		ctx.arc(this.x + playerSide/2, this.y + playerSide/2, 100, 0, 2*Math.PI);
+		ctx.arc(this.x + playerSide/2, this.y + playerSide/2, this.radius, 0, 2*Math.PI);
 		ctx.stroke();
 	}
 
