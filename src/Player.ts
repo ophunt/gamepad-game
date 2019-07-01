@@ -4,6 +4,9 @@ import { VisibleObject } from "./VisibleObject";
 import { Direction } from "./Direction";
 
 export class Player implements VisibleObject {
+	private static minRadius = 50;
+	private static maxRadius = 200;
+
 	private facing: Direction = Direction.Right;
 	private speed: number = 3;
 	private radius: number = 50;
@@ -66,6 +69,7 @@ export class Player implements VisibleObject {
 		// Determine circle radius
 		if (inputs.leftTrigger.value > 0 || inputs.rightTrigger.value > 0) {
 			this.radius += inputs.rightTrigger.value - inputs.leftTrigger.value;
+			this.radius = Math.max(Player.minRadius, Math.min(this.radius, Player.maxRadius))
 		}
 	}
 

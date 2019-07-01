@@ -4,6 +4,7 @@ import { VisibleObject } from "./visibleObject";
 import { GamepadInputs } from "./GamepadInputs";
 
 export class Game {
+	private ctx: CanvasRenderingContext2D;
 	private player: Player;
 	private gamepad?: Gamepad;
 	private inputs?: GamepadInputs;
@@ -11,8 +12,12 @@ export class Game {
 	private visibleObjects: VisibleObject[] = [];
 
 	constructor (
-		private ctx: CanvasRenderingContext2D,
+		private canvas: HTMLCanvasElement,
 	) {
+		this.ctx = <CanvasRenderingContext2D>canvas.getContext('2d');
+		canvas.width = window.innerWidth - 10;
+		canvas.height = window.innerHeight - 10;
+
 		this.player = new Player(10, 10, "red", this);
 		this.visibleObjects.push(this.player);
 		this.gameObjects.push(this.player);
@@ -43,7 +48,8 @@ export class Game {
 	}
 
 	private draw = () => {
-		this.ctx.clearRect(0, 0, 1000, 1000);
+		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
 		for (let vObj of this.visibleObjects) {
 			vObj.draw(this.ctx);
 		}
