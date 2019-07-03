@@ -10,6 +10,8 @@ export class Player implements VisibleObject {
 	private facing: Direction = Direction.Right;
 	private speed: number = 3;
 	private radius: number = 50;
+	private leftAngle: number = 0;
+	private rightAngle: number = Math.PI;
 
 	constructor(
 		private x: number,
@@ -80,6 +82,7 @@ export class Player implements VisibleObject {
 		ctx.fillRect(this.x, this.y, playerSide, playerSide);
 		// TODO: Replace with drawing a real character
 
+		// Draw way the player is facing
 		ctx.fillStyle = "orange";
 		switch (this.facing) {
 			case Direction.Up:
@@ -96,9 +99,18 @@ export class Player implements VisibleObject {
 				break;
 		}
 
+		// Draw the circle
 		ctx.beginPath();
 		ctx.arc(this.x + playerSide/2, this.y + playerSide/2, this.radius, 0, 2*Math.PI);
 		ctx.stroke();
+
+		// Draw the arc
+		ctx.fillStyle = this.color;
+		ctx.beginPath();
+		ctx.arc(this.x + playerSide/2, this.y + playerSide/2, this.radius + 4, this.leftAngle, this.rightAngle);
+		ctx.arc(this.x + playerSide/2, this.y + playerSide/2, this.radius - 4, this.rightAngle, this.leftAngle, true);
+		ctx.closePath();
+		ctx.fill();
 	}
 
 	move(dx: number, dy: number): void {
