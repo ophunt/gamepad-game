@@ -10,8 +10,9 @@ export class Player implements VisibleObject {
 	private facing: Direction = Direction.Right;
 	private speed: number = 3;
 	private radius: number = 50;
-	private leftAngle: number = 0;
-	private rightAngle: number = Math.PI;
+	private leftAngle: number | null = null;
+	private rightAngle: number | null = null;
+	private currentAngle: number | null = null;
 
 	constructor(
 		private x: number,
@@ -73,6 +74,25 @@ export class Player implements VisibleObject {
 			this.radius += inputs.rightTrigger.value - inputs.leftTrigger.value;
 			this.radius = Math.max(Player.minRadius, Math.min(this.radius, Player.maxRadius))
 		}
+
+		// Determine current right stick location
+		if (Math.abs(inputs.rightXAxis.value)**2 + Math.abs(inputs.rightYAxis.value)**2 > 0.6) {
+			// Maps the x and y value to a radian angle on [0, 2*Math.PI)
+			this.currentAngle = (Math.atan2(inputs.rightYAxis.value, inputs.rightXAxis.value) + 2*Math.PI) % (2*Math.PI);
+			// Set the arc angles
+			if (this.leftAngle === null || this.rightAngle === null) {
+				this.leftAngle = this.currentAngle;
+				this.rightAngle = this.currentAngle + 0.1;
+			}
+		} else {
+			this.currentAngle = null;
+			this.leftAngle = null;
+			this.rightAngle = null;
+		}
+
+		if (inputs.view.pressed && this.currentAngle !== null) {
+			console.log(this.currentAngle);
+		}
 	}
 
 	draw(ctx: CanvasRenderingContext2D): void {
@@ -105,12 +125,22 @@ export class Player implements VisibleObject {
 		ctx.stroke();
 
 		// Draw the arc
-		ctx.fillStyle = this.color;
-		ctx.beginPath();
-		ctx.arc(this.x + playerSide/2, this.y + playerSide/2, this.radius + 4, this.leftAngle, this.rightAngle);
-		ctx.arc(this.x + playerSide/2, this.y + playerSide/2, this.radius - 4, this.rightAngle, this.leftAngle, true);
-		ctx.closePath();
-		ctx.fill();
+		if (this.leftAngle !== null && this.rightAngle !== null) {
+			ctx.fillStyle = this.color;
+			ctx.beginPath();
+			ctx.arc(this.x + playerSide/2, this.y + playerSide/2, this.radius + 4, this.leftAngle, this.rightAngle);
+			ctx.arc(this.x + playerSide/2, this.y + playerSide/2, this.radius - 4, this.rightAngle, this.leftAngle, true);
+			ctx.closePath();
+			ctx.fill();
+		}
+
+		// Draw the pointer
+		if (this.currentAngle !== null) {
+			ctx.fillStyle = "blue";
+			ctx.beginPath();
+			ctx.arc(this.x + playerSide/2 + (Math.cos(this.currentAngle)*this.radius), this.y + playerSide/2 + (Math.sin(this.currentAngle)*this.radius), 10, 0, 2*Math.PI);
+			ctx.fill();
+		}
 	}
 
 	move(dx: number, dy: number): void {
