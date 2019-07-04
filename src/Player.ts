@@ -76,13 +76,25 @@ export class Player implements VisibleObject {
 		}
 
 		// Determine current right stick location
-		if (Math.abs(inputs.rightXAxis.value)**2 + Math.abs(inputs.rightYAxis.value)**2 > 0.6) {
+		if (Math.abs(inputs.rightXAxis.value)**2 + Math.abs(inputs.rightYAxis.value)**2 > 0.4) {
 			// Maps the x and y value to a radian angle on [0, 2*Math.PI)
 			this.currentAngle = (Math.atan2(inputs.rightYAxis.value, inputs.rightXAxis.value) + 2*Math.PI) % (2*Math.PI);
 			// Set the arc angles
 			if (this.leftAngle === null || this.rightAngle === null) {
 				this.leftAngle = this.currentAngle;
 				this.rightAngle = this.currentAngle + 0.1;
+			} else {
+				if (this.leftAngle - this.currentAngle > 0 && this.leftAngle - this.currentAngle <= 1) {
+					this.leftAngle = this.currentAngle;
+				} else if (this.currentAngle - this.rightAngle > 0 && this.currentAngle - this.rightAngle <= 1) {
+					this.rightAngle = this.currentAngle;
+				}
+
+				if (Math.abs(this.leftAngle - this.rightAngle) >= 2*Math.PI) {
+					this.completeCircle();
+					this.leftAngle = null;
+					this.rightAngle = null;
+				}
 			}
 		} else {
 			this.currentAngle = null;
@@ -91,7 +103,7 @@ export class Player implements VisibleObject {
 		}
 
 		if (inputs.view.pressed && this.currentAngle !== null) {
-			console.log(this.currentAngle);
+			console.log(this.leftAngle);
 		}
 	}
 
@@ -156,6 +168,10 @@ export class Player implements VisibleObject {
 
 		this.x += dx;
 		this.y += dy;
+	}
+
+	completeCircle(): void {
+		console.log("Circle completed!");
 	}
 
 	attack(game: Game): void {
