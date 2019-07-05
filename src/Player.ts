@@ -84,11 +84,17 @@ export class Player implements VisibleObject {
 				this.leftAngle = this.currentAngle;
 				this.rightAngle = this.currentAngle + 0.1;
 			} else {
-				if (this.leftAngle - this.currentAngle > 0 && this.leftAngle - this.currentAngle <= 1) {
+				let loopThresh = 1;
+				if (this.leftAngle - this.currentAngle > 0 && this.leftAngle - this.currentAngle <= loopThresh) {
 					this.leftAngle = this.currentAngle;
-				} else if (this.currentAngle - this.rightAngle > 0 && this.currentAngle - this.rightAngle <= 1) {
+				} else if (this.leftAngle < loopThresh && this.leftAngle + 2*Math.PI - this.currentAngle <= loopThresh) {
+					this.leftAngle = this.currentAngle;
+				} else if (this.currentAngle - this.rightAngle > 0 && this.currentAngle - this.rightAngle <= loopThresh) {
+					this.rightAngle = this.currentAngle;
+				} else if (2*Math.PI - this.rightAngle < loopThresh && 2*Math.PI - this.rightAngle + this.currentAngle <= loopThresh) {
 					this.rightAngle = this.currentAngle;
 				}
+				// TODO: This doesn't actually complete the circle, as it moves the angles together and not apart
 
 				if (Math.abs(this.leftAngle - this.rightAngle) >= 2*Math.PI) {
 					this.completeCircle();
