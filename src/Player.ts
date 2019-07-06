@@ -25,13 +25,13 @@ export class Player implements VisibleObject {
 
 	update(inputs: GamepadInputs): void {
 		// Determine attack
-		if (inputs.a.pressed) {
+		if (inputs.b.pressed) {
 			console.log("A");
-			this.attack(this.game);
+			this.clearArc();
 		}
 
 		// Determine color
-		if (inputs.b.pressed) {
+		if (inputs.a.pressed) {
 			this.color = "red";
 		} else if (inputs.x.pressed) {
 			this.color = "blue";
@@ -77,8 +77,20 @@ export class Player implements VisibleObject {
 
 		// Determine current right stick location
 		if (Math.abs(inputs.rightXAxis.value)**2 + Math.abs(inputs.rightYAxis.value)**2 > 0.4) {
+			// Store old angle to determine direction of motion
+			let oldAngle = this.currentAngle;
+
 			// Maps the x and y value to a radian angle on [0, 2*Math.PI)
 			this.currentAngle = (Math.atan2(inputs.rightYAxis.value, inputs.rightXAxis.value) + 2*Math.PI) % (2*Math.PI);
+
+			// Determine direction of motion
+			if (oldAngle !== null) {
+				if (this.currentAngle > oldAngle) { // Moving right
+
+				} else if (this.currentAngle < oldAngle) { // Moving left
+
+				}
+			}
 			// Set the arc angles
 			if (this.leftAngle === null || this.rightAngle === null) {
 				this.leftAngle = this.currentAngle;
@@ -156,7 +168,11 @@ export class Player implements VisibleObject {
 		if (this.currentAngle !== null) {
 			ctx.fillStyle = "blue";
 			ctx.beginPath();
-			ctx.arc(this.x + playerSide/2 + (Math.cos(this.currentAngle)*this.radius), this.y + playerSide/2 + (Math.sin(this.currentAngle)*this.radius), 10, 0, 2*Math.PI);
+			ctx.arc(
+				this.x + playerSide/2 + (Math.cos(this.currentAngle)*this.radius),
+				this.y + playerSide/2 + (Math.sin(this.currentAngle)*this.radius),
+				10, 0, 2*Math.PI
+			);
 			ctx.fill();
 		}
 	}
@@ -180,7 +196,9 @@ export class Player implements VisibleObject {
 		console.log("Circle completed!");
 	}
 
-	attack(game: Game): void {
-		;
+	clearArc(): void {
+		this.currentAngle = null;
+		this.leftAngle = null;
+		this.rightAngle = null;
 	}
 }
