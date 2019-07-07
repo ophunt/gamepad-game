@@ -18,7 +18,7 @@ export class Game {
 		canvas.width = window.innerWidth - 10;
 		canvas.height = window.innerHeight - 10;
 
-		this.player = new Player(10, 10, "red", this);
+		this.player = new Player(10, 10, "red");
 		this.visibleObjects.push(this.player);
 		this.gameObjects.push(this.player);
 

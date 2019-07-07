@@ -12,13 +12,12 @@ export class Player implements VisibleObject {
 	private radius: number = 50;
 	private leftAngle: number | null = null;
 	private rightAngle: number | null = null;
-	private currentAngle: number | null = null;
+	private currentAngle: number = 0;
 
 	constructor(
 		private x: number,
 		private y: number,
 		private color: string,
-		private game: Game
 	) {
 
 	}
@@ -75,6 +74,16 @@ export class Player implements VisibleObject {
 			this.radius = Math.max(Player.minRadius, Math.min(this.radius, Player.maxRadius))
 		}
 
+		if (inputs.leftBumper.pressed && inputs.rightBumper.pressed) {
+
+		} else if (inputs.leftBumper.pressed) {
+			this.currentAngle = (this.currentAngle - 0.1 + 2*Math.PI) % (2*Math.PI);
+		} else if (inputs.rightBumper.pressed) {
+			this.currentAngle = (this.currentAngle + 0.1 + 2*Math.PI) % (2*Math.PI);
+		}
+
+		/* Commenting out right stick pointer control in favor of controlling with triggers.
+
 		// Determine current right stick location
 		if (Math.abs(inputs.rightXAxis.value)**2 + Math.abs(inputs.rightYAxis.value)**2 > 0.4) {
 			// Store old angle to determine direction of motion
@@ -120,8 +129,10 @@ export class Player implements VisibleObject {
 			this.rightAngle = null;
 		}
 
+		*/
+
 		if (inputs.view.pressed && this.currentAngle !== null) {
-			console.log(this.leftAngle);
+			console.log(this.currentAngle);
 		}
 	}
 
@@ -197,7 +208,7 @@ export class Player implements VisibleObject {
 	}
 
 	clearArc(): void {
-		this.currentAngle = null;
+		this.currentAngle = 0;
 		this.leftAngle = null;
 		this.rightAngle = null;
 	}
