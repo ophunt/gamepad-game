@@ -84,6 +84,19 @@ export class Player implements VisibleObject {
 			this.currentAngle = (this.currentAngle + 0.1 + 2*Math.PI) % (2*Math.PI);
 		}
 
+		if (this.leftAngle !== null && this.rightAngle !== null) {
+			let loopThresh = 1;
+			if (this.leftAngle - this.currentAngle > 0 && this.leftAngle - this.currentAngle <= loopThresh) {
+				this.leftAngle = this.currentAngle;
+			} else if (this.leftAngle < loopThresh && this.leftAngle + 2*Math.PI - this.currentAngle <= loopThresh) {
+				this.leftAngle = this.currentAngle;
+			} else if (this.currentAngle - this.rightAngle > 0 && this.currentAngle - this.rightAngle <= loopThresh) {
+				this.rightAngle = this.currentAngle;
+			} else if (2*Math.PI - this.rightAngle < loopThresh && 2*Math.PI - this.rightAngle + this.currentAngle <= loopThresh) {
+				this.rightAngle = this.currentAngle;
+			}
+		}
+
 		/* Commenting out right stick pointer control in favor of controlling with triggers.
 
 		// Determine current right stick location
