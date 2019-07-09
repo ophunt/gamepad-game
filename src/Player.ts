@@ -23,19 +23,21 @@ export class Player implements VisibleObject {
 	}
 
 	update(inputs: GamepadInputs): void {
-		// Determine attack
-		if (inputs.b.pressed) {
+		// Determine arcing
+		if (inputs.a.pressed && this.leftAngle === null) {
 			console.log("A");
-			this.clearArc();
+			this.leftAngle = this.currentAngle;
+			this.rightAngle = this.currentAngle;
+		} else if (inputs.b.pressed && this.leftAngle !== null) {
+			this.leftAngle = null;
+			this.rightAngle = null;
 		}
 
 		// Determine color
-		if (inputs.a.pressed) {
-			this.color = "red";
-		} else if (inputs.x.pressed) {
+		if (inputs.x.pressed) {
 			this.color = "blue";
 		} else if (inputs.y.pressed) {
-			this.color = "yellow";
+			this.color = "red";
 		}
 
 		// Calculate movement
@@ -75,7 +77,7 @@ export class Player implements VisibleObject {
 		}
 
 		if (inputs.leftBumper.pressed && inputs.rightBumper.pressed) {
-
+			;
 		} else if (inputs.leftBumper.pressed) {
 			this.currentAngle = (this.currentAngle - 0.1 + 2*Math.PI) % (2*Math.PI);
 		} else if (inputs.rightBumper.pressed) {
