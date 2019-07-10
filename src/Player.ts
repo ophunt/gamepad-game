@@ -10,9 +10,11 @@ export class Player implements VisibleObject {
 	private facing: Direction = Direction.Right;
 	private speed: number = 3;
 	private radius: number = 50;
-	private leftAngle: number | null = null;
-	private rightAngle: number | null = null;
 	private currentAngle: number = 0;
+	private startAngle: number | null = null;
+	private netDistance: number = 0;
+	private leftDistance: number = 0;
+	private rightDistance: number = 0;
 
 	constructor(
 		private x: number,
@@ -24,13 +26,13 @@ export class Player implements VisibleObject {
 
 	update(inputs: GamepadInputs): void {
 		// Determine arcing
-		if (inputs.a.pressed && this.leftAngle === null) {
-			console.log("A");
-			this.leftAngle = this.currentAngle;
-			this.rightAngle = this.currentAngle;
-		} else if (inputs.b.pressed && this.leftAngle !== null) {
-			this.leftAngle = null;
-			this.rightAngle = null;
+		if (inputs.a.pressed && this.startAngle === null) {
+			this.startAngle = this.currentAngle;
+		} else if (inputs.b.pressed && this.startAngle !== null) {
+			this.startAngle = null;
+			this.leftDistance = 0;
+			this.rightDistance = 0;
+			this.netDistance = 0;
 		}
 
 		// Determine color
@@ -80,21 +82,24 @@ export class Player implements VisibleObject {
 			;
 		} else if (inputs.leftBumper.pressed) {
 			this.currentAngle = (this.currentAngle - 0.1 + 2*Math.PI) % (2*Math.PI);
+			if (this.startAngle !== null) {
+				this.netDistance -= 0.1;
+				if (this.netDistance < this.leftDistance) {
+					this.leftDistance = this.netDistance;
+				}
+			}
 		} else if (inputs.rightBumper.pressed) {
 			this.currentAngle = (this.currentAngle + 0.1 + 2*Math.PI) % (2*Math.PI);
+			if (this.startAngle !== null) {
+				this.netDistance += 0.1;
+				if (this.netDistance > this.rightDistance) {
+					this.rightDistance = this.netDistance;
+				}
+			}
 		}
 
-		if (this.leftAngle !== null && this.rightAngle !== null) {
-			let loopThresh = 1;
-			if (this.leftAngle - this.currentAngle > 0 && this.leftAngle - this.currentAngle <= loopThresh) {
-				this.leftAngle = this.currentAngle;
-			} else if (this.leftAngle < loopThresh && this.leftAngle + 2*Math.PI - this.currentAngle <= loopThresh) {
-				this.leftAngle = this.currentAngle;
-			} else if (this.currentAngle - this.rightAngle > 0 && this.currentAngle - this.rightAngle <= loopThresh) {
-				this.rightAngle = this.currentAngle;
-			} else if (2*Math.PI - this.rightAngle < loopThresh && 2*Math.PI - this.rightAngle + this.currentAngle <= loopThresh) {
-				this.rightAngle = this.currentAngle;
-			}
+		if (this.rightDistance - this.leftDistance >= 2*Math.PI) {
+			this.completeCircle();
 		}
 
 		/* Commenting out right stick pointer control in favor of controlling with triggers.
@@ -147,7 +152,12 @@ export class Player implements VisibleObject {
 		*/
 
 		if (inputs.view.pressed && this.currentAngle !== null) {
-			console.log(this.currentAngle);
+			console.log("C " + this.currentAngle);
+			console.log("S " + this.startAngle);
+			console.log("L " + this.leftDistance);
+			console.log("R " + this.rightDistance);
+			console.log("N " + this.netDistance);
+			console.log("");
 		}
 	}
 
@@ -181,16 +191,18 @@ export class Player implements VisibleObject {
 		ctx.stroke();
 
 		// Draw the arc
-		if (this.leftAngle !== null && this.rightAngle !== null) {
+		if (this.startAngle !== null) {
 			ctx.fillStyle = this.color;
 			ctx.beginPath();
-			ctx.arc(this.x + playerSide/2, this.y + playerSide/2, this.radius + 4, this.leftAngle, this.rightAngle);
-			ctx.arc(this.x + playerSide/2, this.y + playerSide/2, this.radius - 4, this.rightAngle, this.leftAngle, true);
+			ctx.arc(this.x + playerSide/2, this.y + playerSide/2, this.radius + 4,
+				this.startAngle + this.leftDistance, this.startAngle + this.rightDistance);
+			ctx.arc(this.x + playerSide/2, this.y + playerSide/2, this.radius - 4,
+				this.startAngle + this.rightDistance, this.startAngle + this.leftDistance, true);
 			ctx.closePath();
 			ctx.fill();
 		}
 
-		// Draw the pointer
+		// Draw the pointer``
 		if (this.currentAngle !== null) {
 			ctx.fillStyle = "blue";
 			ctx.beginPath();
@@ -220,11 +232,9 @@ export class Player implements VisibleObject {
 
 	completeCircle(): void {
 		console.log("Circle completed!");
-	}
-
-	clearArc(): void {
-		this.currentAngle = 0;
-		this.leftAngle = null;
-		this.rightAngle = null;
+		this.startAngle = this.currentAngle;
+		this.leftDistance = 0;
+		this.rightDistance = 0;
+		this.netDistance = 0;
 	}
 }
