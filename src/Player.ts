@@ -152,12 +152,7 @@ export class Player implements VisibleObject {
 		*/
 
 		if (inputs.view.pressed && this.currentAngle !== null) {
-			console.log("C " + this.currentAngle);
-			console.log("S " + this.startAngle);
-			console.log("L " + this.leftDistance);
-			console.log("R " + this.rightDistance);
-			console.log("N " + this.netDistance);
-			console.log("");
+
 		}
 	}
 

@@ -15,14 +15,18 @@ export class Game {
 		private canvas: HTMLCanvasElement,
 	) {
 		this.ctx = <CanvasRenderingContext2D>canvas.getContext('2d');
-		canvas.width = window.innerWidth - 10;
-		canvas.height = window.innerHeight - 10;
+		this.setCanvasSize();
 
 		this.player = new Player(10, 10, "red");
 		this.visibleObjects.push(this.player);
 		this.gameObjects.push(this.player);
 
 		window.addEventListener("gamepadconnected", () => this.getGamepad())
+	};
+
+	public setCanvasSize() {
+		this.canvas.width = window.innerWidth - 10;
+		this.canvas.height = window.innerHeight - 10;
 	};
 
 	private getGamepad = () => {
@@ -32,7 +36,7 @@ export class Game {
 		}
 
 		this.inputs = new GamepadInputs(<Gamepad>this.gamepad);
-	}
+	};
 
 	private updateInputs = (): boolean => {
 		if (this.inputs) {
