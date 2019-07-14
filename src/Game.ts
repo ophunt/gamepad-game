@@ -17,7 +17,7 @@ export class Game {
 		this.ctx = <CanvasRenderingContext2D>canvas.getContext('2d');
 		this.setCanvasSize();
 
-		this.player = new Player(10, 10, "red");
+		this.player = new Player(10, 10, "red", this);
 		this.visibleObjects.push(this.player);
 		this.gameObjects.push(this.player);
 
@@ -78,5 +78,9 @@ export class Game {
 		console.log("Game loaded!");
 
 		requestAnimationFrame(this.gameLoop);
+	};
+
+	public getCanvasSize(): number[] {
+		return [this.canvas.width, this.canvas.height];
 	};
 }

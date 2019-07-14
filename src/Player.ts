@@ -7,6 +7,7 @@ export class Player implements VisibleObject {
 	private static minRadius = 50;
 	private static maxRadius = 200;
 
+	private sideLength: number = 50;
 	private facing: Direction = Direction.Right;
 	private speed: number = 3;
 	private radius: number = 50;
@@ -20,6 +21,7 @@ export class Player implements VisibleObject {
 		private x: number,
 		private y: number,
 		private color: string,
+		private game: Game,
 	) {
 
 	}
@@ -157,41 +159,40 @@ export class Player implements VisibleObject {
 	}
 
 	draw(ctx: CanvasRenderingContext2D): void {
-		let playerSide = 50;
 		let facingSide = 10;
 		ctx.fillStyle = this.color;
-		ctx.fillRect(this.x, this.y, playerSide, playerSide);
+		ctx.fillRect(this.x, this.y, this.sideLength, this.sideLength);
 		// TODO: Replace with drawing a real character
 
 		// Draw way the player is facing
 		ctx.fillStyle = "orange";
 		switch (this.facing) {
 			case Direction.Up:
-				ctx.fillRect(this.x, this.y, playerSide, facingSide);
+				ctx.fillRect(this.x, this.y, this.sideLength, facingSide);
 				break;
 			case Direction.Down:
-				ctx.fillRect(this.x, this.y + playerSide - facingSide, playerSide, facingSide);
+				ctx.fillRect(this.x, this.y + this.sideLength - facingSide, this.sideLength, facingSide);
 				break;
 			case Direction.Left:
-				ctx.fillRect(this.x, this.y, facingSide, playerSide);
+				ctx.fillRect(this.x, this.y, facingSide, this.sideLength);
 				break;
 			case Direction.Right:
-				ctx.fillRect(this.x + playerSide - facingSide, this.y, facingSide, playerSide);
+				ctx.fillRect(this.x + this.sideLength - facingSide, this.y, facingSide, this.sideLength);
 				break;
 		}
 
 		// Draw the circle
 		ctx.beginPath();
-		ctx.arc(this.x + playerSide/2, this.y + playerSide/2, this.radius, 0, 2*Math.PI);
+		ctx.arc(this.x + this.sideLength/2, this.y + this.sideLength/2, this.radius, 0, 2*Math.PI);
 		ctx.stroke();
 
 		// Draw the arc
 		if (this.startAngle !== null) {
 			ctx.fillStyle = this.color;
 			ctx.beginPath();
-			ctx.arc(this.x + playerSide/2, this.y + playerSide/2, this.radius + 4,
+			ctx.arc(this.x + this.sideLength/2, this.y + this.sideLength/2, this.radius + 4,
 				this.startAngle + this.leftDistance, this.startAngle + this.rightDistance);
-			ctx.arc(this.x + playerSide/2, this.y + playerSide/2, this.radius - 4,
+			ctx.arc(this.x + this.sideLength/2, this.y + this.sideLength/2, this.radius - 4,
 				this.startAngle + this.rightDistance, this.startAngle + this.leftDistance, true);
 			ctx.closePath();
 			ctx.fill();
@@ -202,8 +203,8 @@ export class Player implements VisibleObject {
 			ctx.fillStyle = "blue";
 			ctx.beginPath();
 			ctx.arc(
-				this.x + playerSide/2 + (Math.cos(this.currentAngle)*this.radius),
-				this.y + playerSide/2 + (Math.sin(this.currentAngle)*this.radius),
+				this.x + this.sideLength/2 + (Math.cos(this.currentAngle)*this.radius),
+				this.y + this.sideLength/2 + (Math.sin(this.currentAngle)*this.radius),
 				10, 0, 2*Math.PI
 			);
 			ctx.fill();
@@ -223,6 +224,10 @@ export class Player implements VisibleObject {
 
 		this.x += dx;
 		this.y += dy;
+
+		let [canvasWidth, canvasHeight] = this.game.getCanvasSize();
+		this.x = Math.max(0, Math.min(this.x, canvasWidth - this.sideLength));
+		this.y = Math.max(0, Math.min(this.y, canvasHeight - this.sideLength));
 	}
 
 	completeCircle(): void {
