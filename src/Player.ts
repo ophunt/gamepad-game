@@ -8,7 +8,6 @@ export class Player implements VisibleObject {
 	private static maxRadius = 200;
 
 	private sideLength: number = 10;
-	private facing: Direction = Direction.Right;
 	private speed: number = 3;
 	private radius: number = 50;
 	private currentAngle: number = 0;
@@ -49,27 +48,18 @@ export class Player implements VisibleObject {
 		let dy: number = 0;
 		if (inputs.dUp.pressed) {
 			dy--;
-			this.facing = Direction.Up;
 		} else if (inputs.dDown.pressed) {
 			dy++;
-			this.facing = Direction.Down;
 		} else if (inputs.dRight.pressed) {
 			dx++;
-			this.facing = Direction.Right;
 		} else if (inputs.dLeft.pressed) {
 			dx--;
-			this.facing = Direction.Left;
 		} else if (Math.abs(inputs.leftXAxis.value) > 0.15 || Math.abs(inputs.leftYAxis.value) > 0.15) {
 			if (Math.abs(inputs.leftXAxis.value) > 0.15) {
 				dx = inputs.leftXAxis.value;
 			}
 			if (Math.abs(inputs.leftYAxis.value) > 0.15) {
 				dy = inputs.leftYAxis.value;
-			}
-			if (Math.abs(dx) > Math.abs(dy)) {
-				this.facing = dx > 0 ? Direction.Right : Direction.Left;
-			} else {
-				this.facing = dy > 0 ? Direction.Down : Direction.Up;
 			}
 		}
 		this.move(dx, dy);
