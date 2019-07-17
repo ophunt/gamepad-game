@@ -1,7 +1,6 @@
 import { Game } from "./Game";
 import { GamepadInputs } from "./GamepadInputs";
 import { VisibleObject } from "./VisibleObject";
-import { Direction } from "./Direction";
 
 export class Player implements VisibleObject {
 	private static minRadius = 50;
@@ -9,6 +8,8 @@ export class Player implements VisibleObject {
 
 	private sideLength: number = 10;
 	private speed: number = 3;
+	private boost: boolean = true;
+	private boostPower: number = 0.5;
 	private radius: number = 50;
 	private currentAngle: number = 0;
 	private startAngle: number | null = null;
@@ -29,12 +30,29 @@ export class Player implements VisibleObject {
 		// Determine arcing
 		if (inputs.a.pressed && this.startAngle === null) {
 			this.startAngle = this.currentAngle;
+		} else if (inputs.a.pressed && this.boost) {
+			this.boost = false;
+
+			let change: number = this.boostPower * (this.netDistance < 0 ? -1 : this.netDistance > 0 ? 1 : 0);
+			this.currentAngle += change;
+			this.netDistance += change;
+
+			if (this.netDistance > this.rightDistance) {
+				this.rightDistance = this.netDistance;
+			} else if (this.netDistance < this.leftDistance) {
+				this.leftDistance = this.netDistance;
+			}
 		} else if (inputs.b.pressed && this.startAngle !== null) {
 			this.startAngle = null;
 			this.leftDistance = 0;
 			this.rightDistance = 0;
 			this.netDistance = 0;
 		}
+
+		if (!inputs.a.pressed) {
+			this.boost = true;
+		}
+
 
 		// Determine color
 		if (inputs.x.pressed) {
@@ -93,55 +111,6 @@ export class Player implements VisibleObject {
 		if (this.rightDistance - this.leftDistance >= 2*Math.PI) {
 			this.completeCircle();
 		}
-
-		/* Commenting out right stick pointer control in favor of controlling with triggers.
-
-		// Determine current right stick location
-		if (Math.abs(inputs.rightXAxis.value)**2 + Math.abs(inputs.rightYAxis.value)**2 > 0.4) {
-			// Store old angle to determine direction of motion
-			let oldAngle = this.currentAngle;
-
-			// Maps the x and y value to a radian angle on [0, 2*Math.PI)
-			this.currentAngle = (Math.atan2(inputs.rightYAxis.value, inputs.rightXAxis.value) + 2*Math.PI) % (2*Math.PI);
-
-			// Determine direction of motion
-			if (oldAngle !== null) {
-				if (this.currentAngle > oldAngle) { // Moving right
-
-				} else if (this.currentAngle < oldAngle) { // Moving left
-
-				}
-			}
-			// Set the arc angles
-			if (this.leftAngle === null || this.rightAngle === null) {
-				this.leftAngle = this.currentAngle;
-				this.rightAngle = this.currentAngle + 0.1;
-			} else {
-				let loopThresh = 1;
-				if (this.leftAngle - this.currentAngle > 0 && this.leftAngle - this.currentAngle <= loopThresh) {
-					this.leftAngle = this.currentAngle;
-				} else if (this.leftAngle < loopThresh && this.leftAngle + 2*Math.PI - this.currentAngle <= loopThresh) {
-					this.leftAngle = this.currentAngle;
-				} else if (this.currentAngle - this.rightAngle > 0 && this.currentAngle - this.rightAngle <= loopThresh) {
-					this.rightAngle = this.currentAngle;
-				} else if (2*Math.PI - this.rightAngle < loopThresh && 2*Math.PI - this.rightAngle + this.currentAngle <= loopThresh) {
-					this.rightAngle = this.currentAngle;
-				}
-				// TODO: This doesn't actually complete the circle, as it moves the angles together and not apart
-
-				if (Math.abs(this.leftAngle - this.rightAngle) >= 2*Math.PI) {
-					this.completeCircle();
-					this.leftAngle = null;
-					this.rightAngle = null;
-				}
-			}
-		} else {
-			this.currentAngle = null;
-			this.leftAngle = null;
-			this.rightAngle = null;
-		}
-
-		*/
 
 		if (inputs.view.pressed && this.currentAngle !== null) {
 
