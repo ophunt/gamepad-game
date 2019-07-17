@@ -33,7 +33,14 @@ export class Player implements VisibleObject {
 		} else if (inputs.a.pressed && this.boost) {
 			this.boost = false;
 
-			let change: number = this.boostPower * (this.netDistance < 0 ? -1 : this.netDistance > 0 ? 1 : 0);
+			let direction: number = 0;
+			if (inputs.leftBumper.pressed) {
+				direction = -1;
+			} else if (inputs.rightBumper.pressed) {
+				direction = 1;
+			}
+
+			let change: number = this.boostPower * direction;
 			this.currentAngle += change;
 			this.netDistance += change;
 
