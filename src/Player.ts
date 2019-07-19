@@ -60,7 +60,6 @@ export class Player implements VisibleObject {
 			this.boost = true;
 		}
 
-
 		// Determine color
 		if (inputs.x.pressed) {
 			this.color = "blue";
