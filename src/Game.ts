@@ -2,10 +2,12 @@ import { Player } from "./Player";
 import { GameObject } from "./gameObject";
 import { VisibleObject } from "./visibleObject";
 import { GamepadInputs } from "./GamepadInputs";
+import { Enemy } from "./Enemy";
 
 export class Game {
 	private ctx: CanvasRenderingContext2D;
 	private player: Player;
+	private enemy: Enemy;
 	private gamepad?: Gamepad;
 	private inputs?: GamepadInputs;
 	private gameObjects: GameObject[] = [];
@@ -20,6 +22,10 @@ export class Game {
 		this.player = new Player(50, 50, "red", this);
 		this.visibleObjects.push(this.player);
 		this.gameObjects.push(this.player);
+
+		this.enemy = new Enemy(400, 400, "green", this);
+		this.visibleObjects.push(this.enemy);
+		this.gameObjects.push(this.enemy);
 
 		window.addEventListener("gamepadconnected", () => this.getGamepad())
 	};
