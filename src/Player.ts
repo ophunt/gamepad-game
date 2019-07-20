@@ -181,7 +181,7 @@ export class Player implements VisibleObject {
 
 	completeCircle(): void {
 		console.log("Circle completed!");
-		this.startAngle = this.currentAngle;
+		this.currentAngle = this.startAngle!;
 		this.leftDistance = 0;
 		this.rightDistance = 0;
 		this.netDistance = 0;
