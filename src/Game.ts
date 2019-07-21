@@ -11,7 +11,7 @@ export class Game {
 	private gamepad?: Gamepad;
 	private inputs?: GamepadInputs;
 	private gameObjects: GameObject[] = [];
-	private visibleObjects: VisibleObject[] = [];
+	private visibleObjects: VisibleObject[][] = [[], [], []];
 
 	constructor (
 		private canvas: HTMLCanvasElement,
@@ -20,11 +20,11 @@ export class Game {
 		this.setCanvasSize();
 
 		this.player = new Player(50, 50, "red", this);
-		this.visibleObjects.push(this.player);
+		this.visibleObjects[2].push(this.player);
 		this.gameObjects.push(this.player);
 
 		this.enemy = new Enemy(400, 400, "green", this);
-		this.visibleObjects.push(this.enemy);
+		this.visibleObjects[1].push(this.enemy);
 		this.gameObjects.push(this.enemy);
 
 		window.addEventListener("gamepadconnected", () => this.getGamepad())
@@ -60,8 +60,10 @@ export class Game {
 	private draw = () => {
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-		for (let vObj of this.visibleObjects) {
-			vObj.draw(this.ctx);
+		for (let priorityLevelArray of this.visibleObjects) {
+			for (let vObj of priorityLevelArray) {
+				vObj.draw(this.ctx);
+			}
 		}
 	};
 
