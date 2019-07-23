@@ -1,6 +1,7 @@
 import { Game } from "./Game";
 import { GamepadInputs } from "./GamepadInputs";
 import { VisibleObject } from "./VisibleObject";
+import { Point } from "./Point";
 
 export class Player implements VisibleObject {
 	private static minRadius = 50;
@@ -185,5 +186,17 @@ export class Player implements VisibleObject {
 		this.leftDistance = 0;
 		this.rightDistance = 0;
 		this.netDistance = 0;
+	}
+
+	isInCircle(...points: Point[]): boolean {
+		let center: Point = new Point(this.x, this.y);
+
+		for (let p of points) {
+			if (p.distFrom(center) > this.radius) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 }
