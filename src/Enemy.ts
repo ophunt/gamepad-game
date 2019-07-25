@@ -1,5 +1,6 @@
 import { VisibleObject } from "./VisibleObject";
 import { Game } from "./Game";
+import { Point } from "./Point";
 
 export class Enemy implements VisibleObject{
 	private sideLength: number = 100;
@@ -29,6 +30,15 @@ export class Enemy implements VisibleObject{
 		ctx.fillStyle = this.color;
 		let innerLength: number = this.sideLength * this.health / this.maxHealth;
 		ctx.fillRect(this.x - innerLength/2, this.y - innerLength/2, innerLength, innerLength);
+	}
+
+	getPoints(): Point[] {
+		let topLeft = new Point(this.x - this.sideLength/2, this.y - this.sideLength/2);
+		let topRight = new Point(this.x + this.sideLength/2, this.y - this.sideLength/2);
+		let botLeft = new Point(this.x - this.sideLength/2, this.y + this.sideLength/2);
+		let botRight = new Point(this.x + this.sideLength/2, this.y + this.sideLength/2);
+
+		return [topLeft, topRight, botLeft, botRight];
 	}
 
 	kill(): void {
