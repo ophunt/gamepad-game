@@ -116,7 +116,8 @@ export class Player implements VisibleObject {
 		}
 
 		if (this.rightDistance - this.leftDistance >= 2*Math.PI) {
-			this.completeCircle();
+			let direction: string = inputs.leftBumper.pressed ? "left" : "right";
+			this.completeCircle(direction);
 		}
 
 		if (inputs.view.pressed && this.currentAngle !== null) {
@@ -180,9 +181,15 @@ export class Player implements VisibleObject {
 		this.y = Math.max(0, Math.min(this.y, canvasHeight - this.sideLength));
 	}
 
-	completeCircle(): void {
+	completeCircle(direction: string): void {
 		console.log("Circle completed!");
-		this.startAngle = this.currentAngle;
+		if (direction === "left") {
+			this.startAngle = (this.startAngle! + this.rightDistance) % (2*Math.PI);
+		} else {
+			this.startAngle = (this.startAngle! + this.leftDistance) % (2*Math.PI);
+		}
+		this.currentAngle = this.startAngle!;
+
 		this.leftDistance = 0;
 		this.rightDistance = 0;
 		this.netDistance = 0;
