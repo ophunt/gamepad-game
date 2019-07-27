@@ -193,9 +193,13 @@ export class Player implements VisibleObject {
 		this.leftDistance = 0;
 		this.rightDistance = 0;
 		this.netDistance = 0;
+
+		if (this.isInCircle(this.game.enemy.getPoints())) {
+			this.game.enemy.kill();
+		}
 	}
 
-	isInCircle(...points: Point[]): boolean {
+	isInCircle(points: Point[]): boolean {
 		let center: Point = new Point(this.x, this.y);
 
 		for (let p of points) {

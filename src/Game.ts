@@ -7,7 +7,7 @@ import { Enemy } from "./Enemy";
 export class Game {
 	private ctx: CanvasRenderingContext2D;
 	private player: Player;
-	private enemy: Enemy;
+	public enemy: Enemy;
 	private gamepad?: Gamepad;
 	private inputs?: GamepadInputs;
 	private gameObjects: GameObject[] = [];

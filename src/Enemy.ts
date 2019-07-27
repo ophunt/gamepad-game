@@ -42,6 +42,6 @@ export class Enemy implements VisibleObject{
 	}
 
 	kill(): void {
-
+		console.log("RIP");
 	}
 }
