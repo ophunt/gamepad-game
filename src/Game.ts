@@ -8,6 +8,7 @@ export class Game {
 	private ctx: CanvasRenderingContext2D;
 	private player: Player;
 	public enemy: Enemy;
+	private score: number;
 	private gamepad?: Gamepad;
 	private inputs?: GamepadInputs;
 	private gameObjects: GameObject[] = [];
@@ -19,20 +20,26 @@ export class Game {
 		this.ctx = <CanvasRenderingContext2D>canvas.getContext('2d');
 		this.setCanvasSize();
 
+		this.score = 0;
+
 		this.player = new Player(50, 50, "red", this);
 		this.visibleObjects[2].push(this.player);
 		this.gameObjects.push(this.player);
 
-		this.enemy = new Enemy(400, 400, "green", this);
+		this.enemy = new Enemy("green", this);
 		this.visibleObjects[1].push(this.enemy);
 		this.gameObjects.push(this.enemy);
 
 		window.addEventListener("gamepadconnected", () => this.getGamepad())
 	};
 
-	public setCanvasSize() {
+	public setCanvasSize(): void {
 		this.canvas.width = window.innerWidth - 10;
 		this.canvas.height = window.innerHeight - 10;
+	};
+
+	public getCanvasSize(): number[] {
+		return [this.canvas.width, this.canvas.height];
 	};
 
 	private getGamepad = () => {
@@ -82,13 +89,14 @@ export class Game {
 		requestAnimationFrame(this.gameLoop);
 	};
 
+	public addScore(n: number) {
+		this.score += n;
+		console.log("Score: " + this.score);
+	}
+
 	public main(): void {
 		console.log("Game loaded!");
 
 		requestAnimationFrame(this.gameLoop);
-	};
-
-	public getCanvasSize(): number[] {
-		return [this.canvas.width, this.canvas.height];
 	};
 }

@@ -4,16 +4,28 @@ import { Point } from "./Point";
 
 export class Enemy implements VisibleObject{
 	private sideLength: number = 100;
+
+	private x: number;
+	private y: number;
+
 	private health = 100;
 	private maxHealth = 100;
 
 	constructor(
-		private x: number,
-		private y: number,
 		private color: string,
 		private game: Game,
 	) {
+		[this.x, this.y] = this.generateLocation();
+	}
 
+	generateLocation(): number[] {
+		let size: number[] = this.game.getCanvasSize()!;
+		let w: number  = size[0];
+		let h: number  = size[1];
+		let x: number = Math.floor(Math.random() * (w - this.sideLength - 100)) + 50;
+		let y: number = Math.floor(Math.random() * (h - this.sideLength - 100)) + 50;
+
+		return [x, y];
 	}
 
 	update(): void {
@@ -43,5 +55,6 @@ export class Enemy implements VisibleObject{
 
 	kill(): void {
 		console.log("RIP");
+		this.game.addScore(1);
 	}
 }
