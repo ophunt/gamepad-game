@@ -68,27 +68,6 @@ export class Player implements VisibleObject {
 			this.color = "red";
 		}
 
-		// Calculate movement
-		let dx: number = 0;
-		let dy: number = 0;
-		if (inputs.dUp.pressed) {
-			dy--;
-		} else if (inputs.dDown.pressed) {
-			dy++;
-		} else if (inputs.dRight.pressed) {
-			dx++;
-		} else if (inputs.dLeft.pressed) {
-			dx--;
-		} else if (Math.abs(inputs.leftXAxis.value) > 0.15 || Math.abs(inputs.leftYAxis.value) > 0.15) {
-			if (Math.abs(inputs.leftXAxis.value) > 0.15) {
-				dx = inputs.leftXAxis.value;
-			}
-			if (Math.abs(inputs.leftYAxis.value) > 0.15) {
-				dy = inputs.leftYAxis.value;
-			}
-		}
-		this.move(dx, dy);
-
 		// Determine circle radius
 		if (inputs.leftTrigger.value > 0 || inputs.rightTrigger.value > 0) {
 			this.radius += inputs.rightTrigger.value - inputs.leftTrigger.value;
@@ -115,13 +94,37 @@ export class Player implements VisibleObject {
 			}
 		}
 
+		// Update speed (inversely proportional to radius)
+		this.speed = 6 - (this.radius / 50);
+
 		if (this.rightDistance - this.leftDistance >= 2*Math.PI) {
 			let direction: string = inputs.leftBumper.pressed ? "left" : "right";
 			this.completeCircle(direction);
 		}
 
-		if (inputs.view.pressed && this.currentAngle !== null) {
+		// Calculate movement
+		let dx: number = 0;
+		let dy: number = 0;
+		if (inputs.dUp.pressed) {
+			dy--;
+		} else if (inputs.dDown.pressed) {
+			dy++;
+		} else if (inputs.dRight.pressed) {
+			dx++;
+		} else if (inputs.dLeft.pressed) {
+			dx--;
+		} else if (Math.abs(inputs.leftXAxis.value) > 0.15 || Math.abs(inputs.leftYAxis.value) > 0.15) {
+			if (Math.abs(inputs.leftXAxis.value) > 0.15) {
+				dx = inputs.leftXAxis.value;
+			}
+			if (Math.abs(inputs.leftYAxis.value) > 0.15) {
+				dy = inputs.leftYAxis.value;
+			}
+		}
+		this.move(dx, dy);
 
+		if (inputs.view.pressed) {
+			console.log(this.speed);
 		}
 	}
 
