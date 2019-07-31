@@ -105,15 +105,24 @@ export class Player implements VisibleObject {
 		// Calculate movement
 		let dx: number = 0;
 		let dy: number = 0;
+
 		if (inputs.dUp.pressed) {
 			dy--;
-		} else if (inputs.dDown.pressed) {
+		}
+
+		if (inputs.dDown.pressed) {
 			dy++;
-		} else if (inputs.dRight.pressed) {
+		}
+
+		if (inputs.dRight.pressed) {
 			dx++;
-		} else if (inputs.dLeft.pressed) {
+		}
+
+		if (inputs.dLeft.pressed) {
 			dx--;
-		} else if (Math.abs(inputs.leftXAxis.value) > 0.15 || Math.abs(inputs.leftYAxis.value) > 0.15) {
+		}
+
+		if (Math.abs(inputs.leftXAxis.value) > 0.15 || Math.abs(inputs.leftYAxis.value) > 0.15) {
 			if (Math.abs(inputs.leftXAxis.value) > 0.15) {
 				dx = inputs.leftXAxis.value;
 			}
