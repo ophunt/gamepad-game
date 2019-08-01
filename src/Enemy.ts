@@ -53,6 +53,10 @@ export class Enemy implements VisibleObject{
 		return [topLeft, topRight, botLeft, botRight];
 	}
 
+	isOver(p: Point) {
+		return (Math.abs(this.x - p.x) <= this.sideLength) && (Math.abs(this.y - p.y) <= this.sideLength);
+	}
+
 	kill(): void {
 		console.log("RIP");
 		this.game.addScore(1);
