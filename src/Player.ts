@@ -211,6 +211,12 @@ export class Player implements VisibleObject {
 		}
 	}
 
+	getPointerPoint(): Point {
+		let x = this.x + Math.cos(this.currentAngle);
+		let y = this.y + Math.sin(this.currentAngle);
+		return new Point(x, y);
+	}
+
 	isInCircle(points: Point[]): boolean {
 		let center: Point = new Point(this.x, this.y);
 
