@@ -132,6 +132,10 @@ export class Player implements VisibleObject {
 		}
 		this.move(dx, dy);
 
+		if (this.pointerIsOnEnemy()) {
+			console.log("DIE");
+		}
+
 		if (inputs.view.pressed) {
 			console.log(this.speed);
 		}
@@ -211,9 +215,14 @@ export class Player implements VisibleObject {
 		}
 	}
 
+	pointerIsOnEnemy(): boolean {
+		let pointerPoint: Point = this.getPointerPoint();
+		return this.game.enemy.isOver(pointerPoint)
+	}
+
 	getPointerPoint(): Point {
-		let x = this.x + Math.cos(this.currentAngle);
-		let y = this.y + Math.sin(this.currentAngle);
+		let x = this.x + this.radius * Math.cos(this.currentAngle);
+		let y = this.y + this.radius * Math.sin(this.currentAngle);
 		return new Point(x, y);
 	}
 
