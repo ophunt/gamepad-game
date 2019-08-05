@@ -89,6 +89,10 @@ export class Game {
 		requestAnimationFrame(this.gameLoop);
 	};
 
+	public setScore(n: number) {
+		this.score = n;
+	}
+
 	public addScore(n: number) {
 		this.score += n;
 		console.log("Score: " + this.score);

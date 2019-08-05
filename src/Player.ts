@@ -133,7 +133,8 @@ export class Player implements VisibleObject {
 		this.move(dx, dy);
 
 		if (this.pointerIsOnEnemy()) {
-			console.log("DIE");
+			this.game.setScore(0);
+			console.log("Game Over!!!");
 		}
 
 		if (inputs.view.pressed) {
