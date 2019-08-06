@@ -42,24 +42,16 @@ export class Game {
 		return [this.canvas.width, this.canvas.height];
 	};
 
-	private getGamepad = () => {
+	private getGamepad = (): boolean => {
 		let gamepads = navigator.getGamepads();
-		if (gamepads.length > 0 && gamepads[0] !== null) {
-			this.gamepad = <Gamepad>gamepads[0];
-		}
-
-		this.inputs = new GamepadInputs(<Gamepad>this.gamepad);
-	};
-
-	private updateInputs = (): boolean => {
-		if (this.inputs) {
-			let gamepads = navigator.getGamepads();
-			if (gamepads.length > 0 && gamepads[0] !== null) {
-				this.gamepad = <Gamepad>gamepads[0];
+		if (gamepads.length > 0) {
+			for (let gamepadIndex = 0; gamepadIndex < gamepads.length; gamepadIndex++) {
+				if (gamepads[gamepadIndex] !== null) {
+					this.gamepad = <Gamepad>gamepads[gamepadIndex];
+					this.inputs = new GamepadInputs(<Gamepad>this.gamepad);
+					return true;
+				}
 			}
-
-			this.inputs = new GamepadInputs(<Gamepad>this.gamepad);
-			return true;
 		}
 		return false;
 	}
@@ -75,7 +67,7 @@ export class Game {
 	};
 
 	private updateObjects = () => {
-		if (this.updateInputs()) {
+		if (this.getGamepad()) {
 			for (let gObj of this.gameObjects) {
 				gObj.update(<GamepadInputs>this.inputs);
 			}
