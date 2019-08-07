@@ -5,30 +5,44 @@ import { GamepadInputs } from "./GamepadInputs";
 import { Enemy } from "./Enemy";
 
 export class Game {
-	private ctx: CanvasRenderingContext2D;
-	private player: Player;
-	public enemy: Enemy;
-	private score: number;
-	private gamepad?: Gamepad;
-	private inputs?: GamepadInputs;
-	private gameObjects: GameObject[] = [];
-	private visibleObjects: VisibleObject[][] = [[], [], []];
+	private _ctx: CanvasRenderingContext2D;
+	private _player: Player;
+	private _enemy: Enemy;
+	private _score: number;
+	private _gamepad?: Gamepad;
+	private _inputs?: GamepadInputs;
+	private _gameObjects: GameObject[] = [];
+	private _visibleObjects: VisibleObject[][] = [[], [], []];
+
+	get enemy(): Enemy {
+		return this._enemy;
+	}
+	set enemy(e: Enemy) {
+		this._enemy = e;
+	}
+
+	get score(): number {
+		return this._score;
+	}
+	set score(s: number) {
+		this._score = s;
+	}
 
 	constructor (
 		private canvas: HTMLCanvasElement,
 	) {
-		this.ctx = <CanvasRenderingContext2D>canvas.getContext('2d');
+		this._ctx = <CanvasRenderingContext2D>canvas.getContext('2d');
 		this.setCanvasSize();
 
-		this.score = 0;
+		this._score = 0;
 
-		this.player = new Player(50, 50, "red", this);
-		this.visibleObjects[2].push(this.player);
-		this.gameObjects.push(this.player);
+		this._player = new Player(50, 50, "red", this);
+		this._visibleObjects[2].push(this._player);
+		this._gameObjects.push(this._player);
 
-		this.enemy = new Enemy("green", this);
-		this.visibleObjects[1].push(this.enemy);
-		this.gameObjects.push(this.enemy);
+		this._enemy = new Enemy("green", this);
+		this._visibleObjects[1].push(this._enemy);
+		this._gameObjects.push(this._enemy);
 
 		window.addEventListener("gamepadconnected", () => this.getGamepad())
 	};
@@ -47,8 +61,8 @@ export class Game {
 		if (gamepads.length > 0) {
 			for (let gamepadIndex = 0; gamepadIndex < gamepads.length; gamepadIndex++) {
 				if (gamepads[gamepadIndex] !== null) {
-					this.gamepad = <Gamepad>gamepads[gamepadIndex];
-					this.inputs = new GamepadInputs(<Gamepad>this.gamepad);
+					this._gamepad = <Gamepad>gamepads[gamepadIndex];
+					this._inputs = new GamepadInputs(<Gamepad>this._gamepad);
 					return true;
 				}
 			}
@@ -57,19 +71,19 @@ export class Game {
 	}
 
 	private draw = () => {
-		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this._ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-		for (let priorityLevelArray of this.visibleObjects) {
+		for (let priorityLevelArray of this._visibleObjects) {
 			for (let vObj of priorityLevelArray) {
-				vObj.draw(this.ctx);
+				vObj.draw(this._ctx);
 			}
 		}
 	};
 
 	private updateObjects = () => {
 		if (this.getGamepad()) {
-			for (let gObj of this.gameObjects) {
-				gObj.update(<GamepadInputs>this.inputs);
+			for (let gObj of this._gameObjects) {
+				gObj.update(<GamepadInputs>this._inputs);
 			}
 		}
 	}
@@ -81,13 +95,13 @@ export class Game {
 		requestAnimationFrame(this.gameLoop);
 	};
 
-	public setScore(n: number) {
-		this.score = n;
+	public set_Score(n: number) {
+		this._score = n;
 	}
 
-	public addScore(n: number) {
-		this.score += n;
-		console.log("Score: " + this.score);
+	public add_Score(n: number) {
+		this._score += n;
+		console.log("_Score: " + this._score);
 	}
 
 	public main(): void {

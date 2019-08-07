@@ -59,7 +59,7 @@ export class Enemy implements VisibleObject{
 
 	kill(): void {
 		console.log("RIP");
-		this.game.addScore(1);
+		this.game.score += 1;
 		[this.x, this.y] = this.generateLocation();
 	}
 }
