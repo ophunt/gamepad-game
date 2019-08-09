@@ -1,4 +1,4 @@
-export class AxisInput implements Input {
+export class AxisInput {
 
 	private _value: number;
 

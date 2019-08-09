@@ -1,14 +1,14 @@
-export class ButtonInput implements Input {
+export class ButtonInput {
 
-	public button: GamepadButton;
-	public pressed: boolean;
+	private _button: GamepadButton;
+	private _pressed: boolean;
 
 	constructor(
-		public name: string,
-		public gamepad: Gamepad,
-		public index: number,
+		private _name: string,
+		private _gamepad: Gamepad,
+		private _index: number,
 	) {
-		this.button = gamepad.buttons[this.index];
-		this.pressed = this.button.pressed;
+		this._button = _gamepad.buttons[this._index];
+		this._pressed = this._button.pressed;
 	}
 }

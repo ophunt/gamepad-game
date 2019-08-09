@@ -1,14 +1,14 @@
-export class TriggerInput implements Input {
+export class TriggerInput {
 
-	public button: GamepadButton;
-	public value: number = 0;
+	public _button: GamepadButton;
+	public _value: number = 0;
 
 	constructor(
-		public name: string,
-		public gamepad: Gamepad,
-		public index: number,
+		public _name: string,
+		public _gamepad: Gamepad,
+		public _index: number,
 	) {
-		this.button = gamepad.buttons[this.index];
-		this.value = this.button.value;
+		this._button = _gamepad.buttons[this._index];
+		this._value = this._button.value;
 	}
 }
