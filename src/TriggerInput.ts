@@ -12,11 +12,11 @@ export class TriggerInput {
 		this._value = this._button.value;
 	}
 
-	get button(): GamepadButton {
-		return this._button;
+	get value(): number {
+		return this._value;
 	}
 
-	set button(g: GamepadButton) {
-		this._button = g;
+	set value(v: number) {
+		this._value = v;
 	}
 }
