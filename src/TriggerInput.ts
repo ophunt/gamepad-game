@@ -1,14 +1,22 @@
 export class TriggerInput {
 
-	public _button: GamepadButton;
-	public _value: number = 0;
+	private _button: GamepadButton;
+	private _value: number = 0;
 
 	constructor(
-		public _name: string,
-		public _gamepad: Gamepad,
-		public _index: number,
+		private _name: string,
+		private _gamepad: Gamepad,
+		private _index: number,
 	) {
 		this._button = _gamepad.buttons[this._index];
 		this._value = this._button.value;
+	}
+
+	get button(): GamepadButton {
+		return this._button;
+	}
+
+	set button(g: GamepadButton) {
+		this._button = g;
 	}
 }
