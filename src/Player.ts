@@ -29,15 +29,15 @@ export class Player implements VisibleObject {
 
 	update(inputs: GamepadInputs): void {
 		// Determine arcing
-		if (inputs.a._pressed && this.startAngle === null) {
+		if (inputs.a.pressed && this.startAngle === null) {
 			this.startAngle = this.currentAngle;
-		} else if (inputs.a._pressed && this.boost) {
+		} else if (inputs.a.pressed && this.boost) {
 			this.boost = false;
 
 			let direction: number = 0;
-			if (inputs.leftBumper._pressed) {
+			if (inputs.leftBumper.pressed) {
 				direction = -1;
-			} else if (inputs.rightBumper._pressed) {
+			} else if (inputs.rightBumper.pressed) {
 				direction = 1;
 			}
 
@@ -50,21 +50,21 @@ export class Player implements VisibleObject {
 			} else if (this.netDistance < this.leftDistance) {
 				this.leftDistance = this.netDistance;
 			}
-		} else if (inputs.b._pressed && this.startAngle !== null) {
+		} else if (inputs.b.pressed && this.startAngle !== null) {
 			this.startAngle = null;
 			this.leftDistance = 0;
 			this.rightDistance = 0;
 			this.netDistance = 0;
 		}
 
-		if (!inputs.a._pressed) {
+		if (!inputs.a.pressed) {
 			this.boost = true;
 		}
 
 		// Determine color
-		if (inputs.x._pressed) {
+		if (inputs.x.pressed) {
 			this.color = "blue";
-		} else if (inputs.y._pressed) {
+		} else if (inputs.y.pressed) {
 			this.color = "red";
 		}
 
@@ -74,9 +74,9 @@ export class Player implements VisibleObject {
 			this.radius = Math.max(Player.minRadius, Math.min(this.radius, Player.maxRadius))
 		}
 
-		if (inputs.leftBumper._pressed && inputs.rightBumper._pressed) {
+		if (inputs.leftBumper.pressed && inputs.rightBumper.pressed) {
 			;
-		} else if (inputs.leftBumper._pressed) {
+		} else if (inputs.leftBumper.pressed) {
 			this.currentAngle = (this.currentAngle - 0.1 + 2*Math.PI) % (2*Math.PI);
 			if (this.startAngle !== null) {
 				this.netDistance -= 0.1;
@@ -84,7 +84,7 @@ export class Player implements VisibleObject {
 					this.leftDistance = this.netDistance;
 				}
 			}
-		} else if (inputs.rightBumper._pressed) {
+		} else if (inputs.rightBumper.pressed) {
 			this.currentAngle = (this.currentAngle + 0.1 + 2*Math.PI) % (2*Math.PI);
 			if (this.startAngle !== null) {
 				this.netDistance += 0.1;
@@ -98,7 +98,7 @@ export class Player implements VisibleObject {
 		this.speed = 6 - (this.radius / 50);
 
 		if (this.rightDistance - this.leftDistance >= 2*Math.PI) {
-			let direction: string = inputs.leftBumper._pressed ? "left" : "right";
+			let direction: string = inputs.leftBumper.pressed ? "left" : "right";
 			this.completeCircle(direction);
 		}
 
@@ -106,19 +106,19 @@ export class Player implements VisibleObject {
 		let dx: number = 0;
 		let dy: number = 0;
 
-		if (inputs.dUp._pressed) {
+		if (inputs.dUp.pressed) {
 			dy--;
 		}
 
-		if (inputs.dDown._pressed) {
+		if (inputs.dDown.pressed) {
 			dy++;
 		}
 
-		if (inputs.dRight._pressed) {
+		if (inputs.dRight.pressed) {
 			dx++;
 		}
 
-		if (inputs.dLeft._pressed) {
+		if (inputs.dLeft.pressed) {
 			dx--;
 		}
 
@@ -137,7 +137,7 @@ export class Player implements VisibleObject {
 			console.log("Game Over!!!");
 		}
 
-		if (inputs.view._pressed) {
+		if (inputs.view.pressed) {
 			console.log(this.speed);
 		}
 	}
