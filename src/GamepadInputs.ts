@@ -7,18 +7,23 @@ export class GamepadInputs {
 	private _b: ButtonInput;
 	private _x: ButtonInput;
 	private _y: ButtonInput;
+
 	private _leftBumper: ButtonInput;
 	private _rightBumper: ButtonInput;
 	private _leftTrigger: TriggerInput;
 	private _rightTrigger: TriggerInput;
+
 	private _view: ButtonInput;
 	private _menu: ButtonInput;
+
 	private _leftStick: ButtonInput;
 	private _rightStick: ButtonInput;
+
 	private _dUp: ButtonInput;
 	private _dDown: ButtonInput;
 	private _dLeft: ButtonInput;
 	private _dRight: ButtonInput;
+
 	private _power: ButtonInput;
 
 	private _leftXAxis: AxisInput;
@@ -51,5 +56,73 @@ export class GamepadInputs {
 		this._leftYAxis = new AxisInput("dLeft",_gamepad, 1);
 		this._rightXAxis = new AxisInput("dRight",_gamepad, 2);
 		this._rightYAxis = new AxisInput("power",_gamepad, 3);
+	}
+
+	get a(): ButtonInput {
+		return this._a;
+	}
+
+	get b(): ButtonInput {
+		return this._b;
+	}
+
+	get x(): ButtonInput {
+		return this._x;
+	}
+
+	get y(): ButtonInput {
+		return this._y;
+	}
+
+	get leftBumper(): ButtonInput {
+		return this._leftBumper;
+	}
+
+	get rightBumper(): ButtonInput {
+		return this._rightBumper;
+	}
+
+	get leftTrigger(): TriggerInput {
+		return this._leftTrigger;
+	}
+
+	get rightTrigger(): TriggerInput {
+		return this._rightTrigger;
+	}
+
+	get view(): ButtonInput {
+		return this._view;
+	}
+
+	get menu(): ButtonInput {
+		return this._menu;
+	}
+
+	get a(): ButtonInput {
+		return this._a;
+	}
+
+	get a(): ButtonInput {
+		return this._a;
+	}
+
+	get a(): ButtonInput {
+		return this._a;
+	}
+
+	get a(): ButtonInput {
+		return this._a;
+	}
+
+	get a(): ButtonInput {
+		return this._a;
+	}
+
+	get a(): ButtonInput {
+		return this._a;
+	}
+
+	get a(): ButtonInput {
+		return this._a;
 	}
 }
