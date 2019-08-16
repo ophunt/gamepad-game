@@ -98,31 +98,50 @@ export class GamepadInputs {
 		return this._menu;
 	}
 
-	get a(): ButtonInput {
-		return this._a;
+	get leftStick(): ButtonInput {
+		return this._leftStick;
+	}
+
+	get rightStick(): ButtonInput {
+		return this._rightStick;
+	}
+
+	get dUp(): ButtonInput {
+		return this._dUp;
 	}
 
 	get a(): ButtonInput {
 		return this._a;
 	}
 
-	get a(): ButtonInput {
-		return this._a;
+	get dDown(): ButtonInput {
+		return this._dDown;
 	}
 
-	get a(): ButtonInput {
-		return this._a;
+	get dLeft(): ButtonInput {
+		return this._dLeft;
 	}
 
-	get a(): ButtonInput {
-		return this._a;
+	get dRight(): ButtonInput {
+		return this._dRight;
 	}
 
-	get a(): ButtonInput {
-		return this._a;
+	get power(): ButtonInput {
+		return this._power;
 	}
 
-	get a(): ButtonInput {
-		return this._a;
+	get leftXAxis(): AxisInput {
+		return this._leftXAxis;
 	}
-}
+
+	get leftYAxis(): AxisInput {
+		return this._leftYAxis;
+	}
+
+	get rightXAxis(): AxisInput {
+		return this._rightXAxis;
+	}
+
+	get rightYAxis(): AxisInput {
+		return this._rightYAxis;
+	}
