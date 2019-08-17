@@ -110,10 +110,6 @@ export class GamepadInputs {
 		return this._dUp;
 	}
 
-	get a(): ButtonInput {
-		return this._a;
-	}
-
 	get dDown(): ButtonInput {
 		return this._dDown;
 	}
@@ -145,3 +141,4 @@ export class GamepadInputs {
 	get rightYAxis(): AxisInput {
 		return this._rightYAxis;
 	}
+}
