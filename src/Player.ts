@@ -5,9 +5,9 @@ import { Point } from "./Point";
 
 export class Player implements VisibleObject {
 	private static minRadius = 50;
-	private static maxRadius = 200;
+	private static maxRadius = 150;
 
-	private sideLength: number = 10;
+	private sideLength: number = 7;
 	private speed: number = 3;
 	private boost: boolean = true;
 	private boostPower: number = 0.5;
