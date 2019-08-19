@@ -12,11 +12,8 @@ export class ButtonInput {
 		this._pressed = this._button.pressed;
 	}
 
-	get pressed(): boolean {
-		return this._pressed;
-	}
+	get pressed(): boolean { return this._pressed; }
 
 	set pressed(p: boolean) {
-		this._pressed = p;
-	}
+		this._pressed = p; }
 }

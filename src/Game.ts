@@ -14,19 +14,13 @@ export class Game {
 	private _gameObjects: GameObject[] = [];
 	private _visibleObjects: VisibleObject[][] = [[], [], []];
 
-	get enemy(): Enemy {
-		return this._enemy;
-	}
+	get enemy(): Enemy { return this._enemy; }
 	set enemy(e: Enemy) {
-		this._enemy = e;
-	}
+		this._enemy = e; }
 
-	get score(): number {
-		return this._score;
-	}
+	get score(): number { return this._score; }
 	set score(s: number) {
-		this._score = s;
-	}
+		this._score = s; }
 
 	constructor (
 		private canvas: HTMLCanvasElement,

@@ -58,87 +58,43 @@ export class GamepadInputs {
 		this._rightYAxis = new AxisInput("power",_gamepad, 3);
 	}
 
-	get a(): ButtonInput {
-		return this._a;
-	}
+	get a(): ButtonInput { return this._a; }
 
-	get b(): ButtonInput {
-		return this._b;
-	}
+	get b(): ButtonInput { return this._b; }
 
-	get x(): ButtonInput {
-		return this._x;
-	}
+	get x(): ButtonInput { return this._x; }
 
-	get y(): ButtonInput {
-		return this._y;
-	}
+	get y(): ButtonInput { return this._y; }
 
-	get leftBumper(): ButtonInput {
-		return this._leftBumper;
-	}
+	get leftBumper(): ButtonInput { return this._leftBumper; }
 
-	get rightBumper(): ButtonInput {
-		return this._rightBumper;
-	}
+	get rightBumper(): ButtonInput { return this._rightBumper; }
 
-	get leftTrigger(): TriggerInput {
-		return this._leftTrigger;
-	}
+	get leftTrigger(): TriggerInput { return this._leftTrigger; }
 
-	get rightTrigger(): TriggerInput {
-		return this._rightTrigger;
-	}
+	get rightTrigger(): TriggerInput { return this._rightTrigger; }
 
-	get view(): ButtonInput {
-		return this._view;
-	}
+	get view(): ButtonInput { return this._view; }
 
-	get menu(): ButtonInput {
-		return this._menu;
-	}
+	get menu(): ButtonInput { return this._menu; }
 
-	get leftStick(): ButtonInput {
-		return this._leftStick;
-	}
+	get leftStick(): ButtonInput { return this._leftStick; }
 
-	get rightStick(): ButtonInput {
-		return this._rightStick;
-	}
+	get rightStick(): ButtonInput { return this._rightStick; }
 
-	get dUp(): ButtonInput {
-		return this._dUp;
-	}
+	get dUp(): ButtonInput { return this._dUp; }
 
-	get dDown(): ButtonInput {
-		return this._dDown;
-	}
+	get dDown(): ButtonInput { return this._dDown; }
+	get dLeft(): ButtonInput { return this._dLeft; }
 
-	get dLeft(): ButtonInput {
-		return this._dLeft;
-	}
+	get dRight(): ButtonInput{ return this._dRight; }
 
-	get dRight(): ButtonInput {
-		return this._dRight;
-	}
+	get power(): ButtonInput { return this._power; }
 
-	get power(): ButtonInput {
-		return this._power;
-	}
+	get leftXAxis(): AxisInput { return this._leftXAxis; }
+	get leftYAxis(): AxisInput { return this._leftYAxis; }
 
-	get leftXAxis(): AxisInput {
-		return this._leftXAxis;
-	}
+	get rightXAxis(): AxisInput { return this._rightXAxis; }
 
-	get leftYAxis(): AxisInput {
-		return this._leftYAxis;
-	}
-
-	get rightXAxis(): AxisInput {
-		return this._rightXAxis;
-	}
-
-	get rightYAxis(): AxisInput {
-		return this._rightYAxis;
-	}
+	get rightYAxis(): AxisInput{ return this._rightYAxis; }
 }
