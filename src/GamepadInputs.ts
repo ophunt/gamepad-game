@@ -59,34 +59,25 @@ export class GamepadInputs {
 	}
 
 	get a(): ButtonInput { return this._a; }
-
 	get b(): ButtonInput { return this._b; }
-
 	get x(): ButtonInput { return this._x; }
-
 	get y(): ButtonInput { return this._y; }
 
 	get leftBumper(): ButtonInput { return this._leftBumper; }
-
 	get rightBumper(): ButtonInput { return this._rightBumper; }
 
 	get leftTrigger(): TriggerInput { return this._leftTrigger; }
-
 	get rightTrigger(): TriggerInput { return this._rightTrigger; }
 
 	get view(): ButtonInput { return this._view; }
-
 	get menu(): ButtonInput { return this._menu; }
 
 	get leftStick(): ButtonInput { return this._leftStick; }
-
 	get rightStick(): ButtonInput { return this._rightStick; }
 
 	get dUp(): ButtonInput { return this._dUp; }
-
 	get dDown(): ButtonInput { return this._dDown; }
 	get dLeft(): ButtonInput { return this._dLeft; }
-
 	get dRight(): ButtonInput{ return this._dRight; }
 
 	get power(): ButtonInput { return this._power; }
@@ -95,6 +86,5 @@ export class GamepadInputs {
 	get leftYAxis(): AxisInput { return this._leftYAxis; }
 
 	get rightXAxis(): AxisInput { return this._rightXAxis; }
-
 	get rightYAxis(): AxisInput{ return this._rightYAxis; }
 }
