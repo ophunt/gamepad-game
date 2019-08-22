@@ -15,12 +15,10 @@ export class Game {
 	private _visibleObjects: VisibleObject[][] = [[], [], []];
 
 	get enemy(): Enemy { return this._enemy; }
-	set enemy(e: Enemy) {
-		this._enemy = e; }
+	set enemy(e: Enemy) { this._enemy = e; }
 
 	get score(): number { return this._score; }
-	set score(s: number) {
-		this._score = s; }
+	set score(s: number) { this._score = s; }
 
 	constructor (
 		private canvas: HTMLCanvasElement,
