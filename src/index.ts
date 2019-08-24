@@ -1,6 +1,6 @@
 import { Game } from "./Game";
 
-const canvas: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById('canvas');
+const canvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById('canvas');
 
 let game: Game = new Game(canvas);
 

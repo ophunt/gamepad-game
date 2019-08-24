@@ -23,7 +23,7 @@ export class Game {
 	constructor (
 		private canvas: HTMLCanvasElement,
 	) {
-		this._ctx = <CanvasRenderingContext2D>canvas.getContext('2d');
+		this._ctx = <CanvasRenderingContext2D> canvas.getContext('2d');
 		this.setCanvasSize();
 
 		this._score = 0;
@@ -53,8 +53,8 @@ export class Game {
 		if (gamepads.length > 0) {
 			for (let gamepadIndex = 0; gamepadIndex < gamepads.length; gamepadIndex++) {
 				if (gamepads[gamepadIndex] !== null) {
-					this._gamepad = <Gamepad>gamepads[gamepadIndex];
-					this._inputs = new GamepadInputs(<Gamepad>this._gamepad);
+					this._gamepad = <Gamepad> gamepads[gamepadIndex];
+					this._inputs = new GamepadInputs(<Gamepad> this._gamepad);
 					return true;
 				}
 			}
@@ -75,7 +75,7 @@ export class Game {
 	private updateObjects = () => {
 		if (this.getGamepad()) {
 			for (let gObj of this._gameObjects) {
-				gObj.update(<GamepadInputs>this._inputs);
+				gObj.update(<GamepadInputs> this._inputs);
 			}
 		}
 	}
