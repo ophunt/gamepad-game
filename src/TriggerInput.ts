@@ -13,7 +13,5 @@ export class TriggerInput {
 	}
 
 	get value(): number { return this._value; }
-
-	set value(v: number) {
-		this._value = v; }
+	set value(v: number) { this._value = v; }
 }
